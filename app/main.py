@@ -9,12 +9,12 @@ import uvicorn
 from app import db, ml, viz, aws
 
 app = FastAPI(
-    title="Spotify Suggester ref",
+    title="Spotify Song Suggester",
     description="Predict songs that you'll like based on what you already like",
     docs_url="/docs",
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
 templates = Jinja2Templates(directory="templates")
 
 
@@ -29,7 +29,7 @@ async def homepage(
     song_name: str = Form(...),
     genre: str = Form(...),
     release_date: int = Form(...),
-    explicit: int = Form(...),
+    explicit: int = Form(...)
 ):
 
     return templates.TemplateResponse(
@@ -40,8 +40,7 @@ async def homepage(
             "genre": genre,
             "release_date": release_date,
             "explicit": explicit,
-        },
-    )
+        })
 
 
 app.include_router(db.router, tags=["Database"])
