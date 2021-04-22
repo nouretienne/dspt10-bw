@@ -12,6 +12,11 @@ pytest = "*"
 requests = "*"
 
 [packages]
+jinja2 = "*"
+pydantic = "*"
+boto3 = "*"
+aiofiles = "*"
+python-dotenv = "*"
 fastapi = "*"
 pandas = "*"
 plotly = "*"
