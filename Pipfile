@@ -12,6 +12,7 @@ pytest = "*"
 requests = "*"
 
 [packages]
+python-multipart = "*"
 jinja2 = "*"
 pydantic = "*"
 boto3 = "*"
