@@ -14,13 +14,13 @@ app = FastAPI(
     docs_url="/docs",
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-templates = Jinja2Templates(directory="templates")
+app.mount("/static", StaticFiles(directory="app/static"), name="static")
+templates = Jinja2Templates(directory="app/templates")
 
 
 @app.get("/", tags=["Homepage"])
 async def homepage(request: Request):
-    return templates.TemplateResponse("/templates/homepage.html", context={"request": request})
+    return templates.TemplateResponse("homepage.html", context={"request": request})
 
 
 @app.post("/", tags=["Homepage"])
@@ -33,7 +33,7 @@ async def homepage(
 ):
 
     return templates.TemplateResponse(
-        "/templates/homepage.html",
+        "homepage.html",
         context={
             "request": request,
             "song_name": song_name,
