@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spotify Song Suggester</title>
+    <link rel="icon" href="../static/Spotify-logo.png" type="'image/x-icon">
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+<div class="container-fluid">
+<form method="post">
+    <label for="song_name">Name of song:</label>
+    <input type="text" id="song_name" name="song_name">
+    <br>
+    <label for="genre">Genre of song:</label>
+    <select id="genre" name="genre">
+        <option value="Hip-Hop">Hip-Hop</option>
+        <option value="Rap">Rap</option>
+        <option value="Heavy Metal">Heavy Metal</option>
+        <option value="Rock and Roll">Rock and Roll</option>
+    </select>
+    <br>
+    <label for="release_date">Year song was released:</label>
+    <input type="range" id="release_date" name="release_date" min="1922" max="2021" step="1" value="1971" oninput="amount.value=release_date.value">
+    <output id="amount" name="amount" for="release_date">1971</output>
+    <br>
+    <label for="explicit">Allow explicit songs?</label>
+    <select id="explicit" name="explicit">
+        <option value="0">No</option>
+        <option value="1">Yes</option>
+    </select>
+    <br>
+    <input type="submit">
+</form>
+<p>Inputs:</p>
+<p>Song: {{song_name}}</p>
+<p>Genre: {{genre}}</p>
+<p>Year: {{release_date}}</p>
+<p>Explicit: {{explicit}}</p>
+</div>
+</body>
+</html>
