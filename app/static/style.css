@@ -1,19 +1,33 @@
-.container-fluid {
+.flex-container{
+    display: flex;
     padding-left: 10px;
-    padding-top: 16px;
+    padding-top: 10px;
 }
+
+.flex-child {
+    flex:1;
+}
+
+.flex-child:first-child {
+    margin-right: 20px;
+}
+
 label {
     margin-top:5px;
     margin-bottom:5px;
     padding-top:3px;
     padding-bottom:3px;
 }
+
 input {
     margin-top:5px;
     margin-bottom:5px;
     padding-top:3px;
     padding-bottom:3px;
 }
+
+
+
 select {
     margin-top:5px;
     margin-bottom:5px;
