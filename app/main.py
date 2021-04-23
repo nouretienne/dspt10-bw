@@ -2,11 +2,12 @@ from fastapi import FastAPI, Request, Form
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from typing import Optional
 from fastapi.responses import HTMLResponse
 from pydantic import BaseModel
 import uvicorn
 
-from app import db, ml, viz, aws
+from app import db, ml, viz, aws, spotify
 
 app = FastAPI(
     title="Spotify Song Suggester",
@@ -20,27 +21,36 @@ templates = Jinja2Templates(directory="app/templates")
 
 @app.get("/", tags=["Homepage"])
 async def homepage(request: Request):
-    return templates.TemplateResponse("homepage.html", context={"request": request})
+    hidden = "hidden"
+    submit_val = "See Artists"
+    return templates.TemplateResponse(
+        "homepage.html",
+        context={"request": request, "hidden": hidden, "submit_val": submit_val},
+    )
+
+
+def modelhere():
+    return 'Please insert cassette_158 to load model'
 
 
 @app.post("/", tags=["Homepage"])
-async def homepage(
-    request: Request,
-    song_name: str = Form(...),
-    genre: str = Form(...),
-    release_date: int = Form(...),
-    explicit: int = Form(...)
-):
-
+async def homepage(request: Request, artists_option: str = Form(None), song_name: str = Form(...)):
+    artists = ['a', 'b', 'c', 'd']
+    submit_val = "Submit"
+    model_out = ""
+    if artists_option is not None:
+        model_out = modelhere()
     return templates.TemplateResponse(
         "homepage.html",
         context={
             "request": request,
             "song_name": song_name,
-            "genre": genre,
-            "release_date": release_date,
-            "explicit": explicit,
-        })
+            "artists": artists,
+            "selected_artist": artists_option,
+            "submit_val": submit_val,
+            "model_out": model_out
+        },
+    )
 
 
 app.include_router(db.router, tags=["Database"])
