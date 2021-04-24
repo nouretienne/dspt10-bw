@@ -2,7 +2,7 @@ import json
 import os
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 import dotenv
 
 dotenv.load_dotenv(dotenv.find_dotenv())
