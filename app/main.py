@@ -37,12 +37,13 @@ def modelhere():
 # allows the homepage to update elements
 # has forms to send user data to functions
 @app.post("/", tags=["Homepage"])
-async def homepage(request: Request,
-                   artists_option: str = Form(None),
-                   song_name: str = Form(...)
-                   ):
-    artists = spotify.song_to_artist(song_name)
-    # artists = ['artist1', 'artist2', 'artist3', 'artist4', 'artist5']
+async def homepage(
+        request: Request,
+        artists_option: str = Form(None),
+        song_name: str = Form(...)
+        ):
+    # artists = spotify.song_to_artist(song_name)
+    artists = ['artist1', 'artist2', 'artist3', 'artist4', 'artist5']
     submit_val = "Submit"
     model_out = ""
     if artists_option is not None:
