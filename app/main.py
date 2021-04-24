@@ -34,8 +34,12 @@ def modelhere():
 
 
 @app.post("/", tags=["Homepage"])
-async def homepage(request: Request, artists_option: str = Form(None), song_name: str = Form(...)):
-    artists = ['a', 'b', 'c', 'd']
+async def homepage(request: Request,
+                   artists_option: str = Form(None),
+                   song_name: str = Form(...)
+                   ):
+    #artists = spotify.song_to_artist(song_name)
+    artists = ['artist1', 'artist2', 'artist3', 'artist4', 'artist5']
     submit_val = "Submit"
     model_out = ""
     if artists_option is not None:
@@ -52,11 +56,11 @@ async def homepage(request: Request, artists_option: str = Form(None), song_name
         },
     )
 
-
-app.include_router(db.router, tags=["Database"])
-app.include_router(aws.router, tags=["AWS S3"])
+app.include_router(spotify.router, tags=['Spotify'])
 app.include_router(ml.router, tags=["Machine Learning"])
 app.include_router(viz.router, tags=["Visualization"])
+app.include_router(aws.router, tags=["AWS"])
+app.include_router(db.router, tags=["Database"])
 
 app.add_middleware(
     CORSMiddleware,
