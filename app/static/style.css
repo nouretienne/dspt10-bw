@@ -1,7 +1,7 @@
 .flex-container{
     display: flex;
     padding-left: 10px;
-    padding-top: 10px;
+    padding-top: 5px;
 }
 
 .flex-child {
@@ -10,6 +10,11 @@
 
 .flex-child:first-child {
     margin-right: 20px;
+}
+
+h2 {
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 label {
@@ -25,8 +30,6 @@ input {
     padding-top:3px;
     padding-bottom:3px;
 }
-
-
 
 select {
     margin-top:5px;
