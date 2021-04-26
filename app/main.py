@@ -31,7 +31,13 @@ async def homepage(request: Request):
 
 
 def modelhere():
-    return 'Please insert cassette_158 to load model'
+    return ['song1', 'song2', 'song3', 'song4']
+
+
+def get_track_src(song_list):
+    # Some for loop interacting with spotify api to get sample track sources into list
+    track_list = ['https://open.spotify.com/embed/track/3B7syUJXZMAtxjil6fqqDY', 'https://open.spotify.com/embed/track/3B7syUJXZMAtxjil6fqqDY', 'https://open.spotify.com/embed/track/3B7syUJXZMAtxjil6fqqDY', 'https://open.spotify.com/embed/track/3B7syUJXZMAtxjil6fqqDY']
+    return {'songs': song_list, 'track_list': track_list}
 
 
 # allows the homepage to update elements
@@ -45,9 +51,11 @@ async def homepage(
     # artists = spotify.song_to_artist(song_name)
     artists = ['artist1', 'artist2', 'artist3', 'artist4', 'artist5']
     submit_val = "Submit"
-    model_out = ""
+    model_out, track_list = "", ""
     if artists_option is not None:
         model_out = modelhere()
+        track_list = spotify.song_list_to_sample('The number of the beast', 'Iron Maiden')
+
     return templates.TemplateResponse(
         "homepage.html",
         context={
@@ -56,7 +64,8 @@ async def homepage(
             "artists": artists,
             "selected_artist": artists_option,
             "submit_val": submit_val,
-            "model_out": model_out
+            "model_out": model_out,
+            "track_list": track_list
         },
     )
 
