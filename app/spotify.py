@@ -24,7 +24,44 @@ def song_to_artist(name):
     return art
 
 
+def same_name_songs(name):
+    results = sp.search(q='track:' + name, type='track', limit=20)
+    table = []
+    for i in range(len(results['tracks']['items'])):
+        if results['tracks']['items'][i]['artists'][0]['name'] not in table[0]['name']:
+            table.append({'name': results['tracks']['items'][i]['artists'][0]['name'],
+                          'picture': results['tracks']['items'][i]['album']['images'][1]['url'],
+                          'link': results['tracks']['items'][i]['external_urls']['spotify'],
+                          'sample': results['tracks']['items'][i]['preview_url']})
+    return table
+
+
+def song_list_to_sample(song_list, artists):
+    table = []
+    results = sp.search(q='artist:' + artists + ' track:' + song_list, type='track', limit=20)
+    for i in range(len(results['tracks']['items'])):
+        table.append({'name': results['tracks']['items'][i]['artists'][0]['name'],
+                      'picture': results['tracks']['items'][i]['album']['images'][1]['url'],
+                      'link': results['tracks']['items'][i]['external_urls']['spotify'],
+                      'sample': results['tracks']['items'][i]['preview_url']})
+    return table
+
+
 @router.get('/spotify/get_artists')
-async def spotify(song_name):
+async def get_artists(song_name):
     artists = song_to_artist(song_name)
     return {'artists': artists}
+
+
+@router.get('/spotify/get_artist_sample')
+async def get_sample(song_name, artists):
+    spotify_dict = song_list_to_sample(song_name, artists)
+    return spotify_dict
+
+
+@router.get('/spotify/test_dict')
+async def test_dict(song_list, artists):
+    table = []
+    results = sp.search(q='artist:' + artists + ' track:' + song_list, type='track', limit=20)
+    table.append({'name': results['tracks']['items'][0]})
+    return table
