@@ -38,12 +38,14 @@ def same_name_songs(name):
 
 def song_list_to_sample(song_list, artists):
     table = []
-    results = sp.search(q='artist:' + artists + ' track:' + song_list, type='track', limit=20)
-    for i in range(len(results['tracks']['items'])):
-        table.append({'name': results['tracks']['items'][i]['artists'][0]['name'],
-                      'picture': results['tracks']['items'][i]['album']['images'][1]['url'],
-                      'link': results['tracks']['items'][i]['external_urls']['spotify'],
-                      'sample': results['tracks']['items'][i]['preview_url']})
+    for artist, song in zip(artists, song_list):
+        results = sp.search(q='artist:' + artist + ' track:' + song, type='track', limit=1)
+        for i in range(len(results['tracks']['items'])):
+            table.append({'name': results['tracks']['items'][i]['name'],
+                          'album': results['tracks']['items'][i]['album']['name'],
+                          'artist': results['tracks']['items'][i]['artists'][0]['name'],
+                          'sample': results['tracks']['items'][i]['external_urls']['spotify'],
+                          'id': results['tracks']['items'][i]['id']})
     return table
 
 
@@ -62,6 +64,9 @@ async def get_sample(song_name, artists):
 @router.get('/spotify/test_dict')
 async def test_dict(song_list, artists):
     table = []
-    results = sp.search(q='artist:' + artists + ' track:' + song_list, type='track', limit=20)
-    table.append({'name': results['tracks']['items'][0]})
+    results = sp.search(q='artist:' + artists + ' track:' + song_list, type='track', limit=1)
+    table.append({'name': results['tracks']['items'][0]['name'],
+                  'album': results['tracks']['items'][0]['album']['name'],
+                  'artist': results['tracks']['items'][0]['artists'][0]['name'],
+                  'sample': results['tracks']['items'][0]['external_urls']['spotify']})
     return table
