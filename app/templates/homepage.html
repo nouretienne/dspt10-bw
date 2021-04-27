@@ -28,7 +28,13 @@
             </form>
         </div>
         <div class="flex-child">
-            <p>Jinja Function to make list of songs</p>
+            {% if track_list != None %}
+                {% for src in track_list %}
+                <div class="flex-child">
+                <iframe src="https://open.spotify.com/embed/track/{{src['id']}}" width="400" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" class="spotifyclass"></iframe>
+                </div>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
     <br>
