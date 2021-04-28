@@ -26,12 +26,8 @@ async def homepage(request: Request):
     submit_val = "See Artists"
     return templates.TemplateResponse(
         "homepage.html",
-        context={"request": request, "hidden": hidden, "submit_val": submit_val},
+        context={"request": request, "hidden": hidden, "submit_val": submit_val,"track_list": None, "selected_artist": None, 'usr_sel': None},
     )
-
-
-def modelhere():
-    return ['song1', 'song2', 'song3', 'song4']
 
 
 # allows the homepage to update elements
@@ -42,24 +38,22 @@ async def homepage(
         artists_option: str = Form(None),
         song_name: str = Form(...)
         ):
-    # artists = spotify.song_to_artist(song_name)
-    artists = ['artist1', 'artist2', 'artist3', 'artist4', 'artist5']
+    model_out, track_list, usr_sel = "", None, None
     submit_val = "Submit"
-    model_out, track_list = "", None
+    artists = spotify.song_to_artist(song_name)
     if artists_option is not None:
-        model_out = modelhere()
-        track_list = spotify.song_list_to_sample(['The number of the beast', 'Blood of heroes'], ['Iron Maiden', 'tyr'])
+        usr_sel = spotify.same_name_songs(song_name, artists_option)
+        model_out = spotify.suggestion(usr_sel[0]['features'])
 
     return templates.TemplateResponse(
         "homepage.html",
         context={
             "request": request,
-            "song_name": song_name,
-            "artists": artists,
             "selected_artist": artists_option,
+            "artists": artists,
+            "track_list": model_out[2:],
             "submit_val": submit_val,
-            "model_out": model_out,
-            "track_list": track_list
+            "usr_sel": usr_sel,
         },
     )
 
