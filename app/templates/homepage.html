@@ -25,10 +25,12 @@
                 </select>
                 <br {{hidden}}>
                 <input type="submit" value="{{submit_val}}">
+                <form action="/" method="get"><input type="reset"></form>
             </form>
         </div>
         <div class="flex-child">
             {% if track_list != None %}
+            <p>Your Recommendations:</p>
                 {% for src in track_list %}
                 <div class="flex-child">
                 <iframe src="https://open.spotify.com/embed/track/{{src['id']}}" width="400" height="80" frameborder="0" allowtransparency="true" allow="encrypted-media" class="spotifyclass"></iframe>
@@ -38,10 +40,5 @@
         </div>
     </div>
     <br>
-    <p>Inputs:</p>
-    <p>Song: {{song_name}}</p>
-    <p>Selected Artist: {{selected_artist}}</p>
-    <p>Model Output: {{model_out}}</p>
-    <p>Something: {{track_list}}</p>
 </body>
 </html>
